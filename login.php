@@ -19,51 +19,59 @@ if ($login="login") {
 			$user = $row[2];
 		}
 
-		if ($data="siswa") {
+		if ($data==="siswa") {
 			$sqlsiswa = "SELECT * FROM siswa WHERE username='$user'";
 			$resultsiswa = $mysqli->query($sqlsiswa);
-			if ($resultsiswa) {
-				while ($rowsiswa = $resultsiswa -> fetch_row()){
-					$namasiswa = $rowsiswa[2];
-					$cabangsiswa = $rowsiswa[1];
-					$jk = $rowsiswa[3];
-					$ttl = $rowsiswa[4];
-					$telp = $rowsiswa[5];
-					$alamat = $rowsiswa[6];
-				}
-				?>
-				<table>
-					<tr>
-						<td>Nama</td>
-						<td>:</td>
-						<td><?php echo $namasiswa;?></td>
-					</tr>
-					<tr>
-						<td>Cabang</td>
-						<td>:</td>
-						<td><?php echo $cabangsiswa;?></td>
-					</tr>
-					<tr>
-						<td>Jenis Kelamin</td>
-						<td>:</td>
-						<td><?php echo $jk;?></td>
-					</tr>
-					<tr>
-						<td>Tempat, Tanggal Lahir</td>
-						<td>:</td>
-						<td><?php echo $ttl;?></td>
-					</tr>
-					<tr>
-						<td>Alamat</td>
-						<td>:</td>
-						<td><?php echo $alamat;?></td>
-					</tr>
-				</table>
-				<?php
+			while ($row = $resultsiswa->fetch_row()) {
+				$nama = $row[2];
+				$jk = ($row[3] = 1) ? "Laki - laki" : "Perempuan";
+				$ttl = $row[4];
+				$telp = $row[5];
+				$alamat = str_replace("'", "", $row[6]);
 			}
+			?>
+			<table>
+				<tr>
+					<td>Nama</td>
+					<td>:</td>
+					<td><?= $nama;?></td>
+				</tr>
+				<tr>
+					<td>Jenis Kelamin</td>
+					<td>:</td>
+					<td><?= $jk;?></td>
+				</tr>
+				<tr>
+					<td>Tempat, Tanggal Lahir</td>
+					<td>:</td>
+					<td><?= $ttl;?></td>
+				</tr>
+				<tr>
+					<td>Nomor Telepon</td>
+					<td>:</td>
+					<td><?= $telp;?></td>
+				</tr>
+				<tr>
+					<td>Alamat</td>
+					<td>:</td>
+					<td><?= $alamat;?></td>
+				</tr>
+			</table>
+			<?php
 		}
-		else {
-			echo "bukan siswa";
+		else{
+			$sqlstaff= "SELECT * FROM staff WHERE username='$user'";
+			$resultstaff = $mysqli->query($sqlstaff);
+
+			while ($row = $resultstaff->fetch_row()) {
+				// echo "staff";
+				$jab = $row[2];
+			}
+
+			if ($jab==="kcabang") {
+				echo "tampil semua cabang";
+				$cab=$row[3];
+			}
 		}
 	}
 	else {
