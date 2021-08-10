@@ -30,7 +30,7 @@ include "db.php";
 	 				<td>password</td>
 	 				<td>:</td>
 	 				<td>
-	 					<input type="text" name="password" placeholder="Masukkan password">
+	 					<input type="password" name="password" placeholder="Masukkan password">
 	 				</td>
 	 			</tr>
 	 			<tr>
