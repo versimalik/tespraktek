@@ -66,11 +66,69 @@ if ($login="login") {
 			while ($row = $resultstaff->fetch_row()) {
 				// echo "staff";
 				$jab = $row[2];
+				$cab=$row[3];
 			}
 
 			if ($jab==="kcabang") {
-				echo "tampil semua cabang";
-				$cab=$row[3];
+				echo "tampil sesuai cabang";
+				$sqlsiswacabang= "SELECT * FROM siswa WHERE cabang=$cab";
+				$resultsiscabang = $mysqli->query($sqlsiswacabang);
+				?>
+				<table>
+					<tr>
+						<td>Nama</td>
+						<td>Jenis Kelamin</td>
+						<td>Tempat, Tanggal Lahir</td>
+						<td>No Telp</td>
+						<td>Alamat</td>
+					</tr>
+				<?php
+				while ($row = $resultsiscabang->fetch_row()){
+					?>
+
+					<tr>
+						<td><?= $row[2]?></td>
+						<td><?= ($row[3]==1)? "Laki - laki" : "Perempuan"?></td>
+						<td><?= $row[4]?></td>
+						<td><?= $row[5]?></td>
+						<td><?= $row[6]?></td>
+					</tr>
+
+					<?php
+				}
+				?>
+				</table>
+				<?php
+			}
+			elseif ($jab==="panitia") {
+				$sqlseluruhsiswa= "SELECT * FROM siswa";
+				$resultseluruhsiswa= $mysqli->query($sqlseluruhsiswa);
+				?>
+				<table>
+					<tr>
+						<td>Nama</td>
+						<td>Jenis Kelamin</td>
+						<td>Tempat, Tanggal Lahir</td>
+						<td>No Telp</td>
+						<td>Alamat</td>
+					</tr>
+				<?php
+				while ($row = $resultseluruhsiswa->fetch_row()){
+					?>
+
+					<tr>
+						<td><?= $row[2]?></td>
+						<td><?= ($row[3]==1)? "Laki - laki" : "Perempuan"?></td>
+						<td><?= $row[4]?></td>
+						<td><?= $row[5]?></td>
+						<td><?= $row[6]?></td>
+					</tr>
+
+					<?php
+				}
+				?>
+				</table>
+				<?php
 			}
 		}
 	}
